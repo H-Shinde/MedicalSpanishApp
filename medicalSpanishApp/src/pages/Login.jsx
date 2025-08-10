@@ -1,110 +1,318 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+    // Add your authentication logic here
+    // For now, just navigate to home
+    navigate('/home');
+  };
+
+  const handleCreateAccount = () => {
+    navigate('/createAccount');
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
+    <div className="min-h-screen flex bg-slate-50">
       {/* Left Side - Sign In Form */}
-      <div className="w-2/5 flex items-center justify-center px-6 py-12 lg:px-8">
-        <div className="w-full max-w-sm">
-          <div className="text-center">
-            <div className="mx-auto h-10 w-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">M</span>
-            </div>
-            <h2 className="mt-10 text-2xl font-bold tracking-tight text-gray-900">
-              Sign in to your account
-            </h2>
-          </div>
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-2/5 flex items-center justify-center px-6 py-12 lg:px-8 relative"
+      >
+        {/* Glassmorphism background blur */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-blue-50/80 backdrop-blur-sm"></div>
+        
+        <div className="w-full max-w-sm relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="text-center"
+          >
+            <motion.div 
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.5, duration: 0.8, type: "spring", stiffness: 200 }}
+              className="mx-auto h-16 w-16 bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden"
+            >
+              <motion.div
+                animate={{ 
+                  background: [
+                    "linear-gradient(45deg, #3B82F6, #6366F1, #8B5CF6)",
+                    "linear-gradient(90deg, #6366F1, #8B5CF6, #EC4899)",
+                    "linear-gradient(135deg, #8B5CF6, #EC4899, #3B82F6)",
+                    "linear-gradient(45deg, #3B82F6, #6366F1, #8B5CF6)"
+                  ]
+                }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="absolute inset-0"
+              />
+              <span className="text-white font-bold text-2xl relative z-10">MS</span>
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="mt-8 text-3xl font-bold tracking-tight bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent"
+            >
+              Medical Spanish
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 0.6 }}
+              className="mt-3 text-sm text-gray-600 font-medium"
+            >
+              Elevate your patient care through language mastery
+            </motion.p>
+          </motion.div>
 
-          <div className="mt-10">
-            <div className="space-y-6">
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+          <motion.form 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="mt-10 space-y-6" 
+            onSubmit={handleSubmit}
+          >
+            <div className="space-y-4">
+              <div className="group">
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-2">
                   Email address
                 </label>
-                <div className="mt-2">
+                <div className="relative">
                   <input
                     id="email"
                     name="email"
                     type="email"
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:ring-gray-300 focus:shadow-lg focus:scale-[1.02]"
+                    placeholder="student@medschool.edu"
                   />
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-indigo-500/0 to-purple-500/0 group-focus-within:from-blue-500/10 group-focus-within:via-indigo-500/10 group-focus-within:to-purple-500/10 transition-all duration-500 pointer-events-none"></div>
                 </div>
               </div>
 
-              <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+              <div className="group">
+                <div className="flex items-center justify-between mb-2">
+                  <label htmlFor="password" className="block text-sm font-semibold text-gray-800">
                     Password
                   </label>
                   <div className="text-sm">
-                    <a href="#" className="font-semibold text-blue-600 hover:text-blue-500">
+                    <motion.a 
+                      whileHover={{ scale: 1.05 }}
+                      href="#" 
+                      className="font-semibold text-blue-600 hover:text-indigo-600 transition-colors duration-300"
+                    >
                       Forgot password?
-                    </a>
+                    </motion.a>
                   </div>
                 </div>
-                <div className="mt-2">
+                <div className="relative">
                   <input
                     id="password"
                     name="password"
                     type="password"
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="block w-full rounded-xl border-0 py-4 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm transition-all duration-300 bg-white/80 backdrop-blur-sm group-hover:ring-gray-300 focus:shadow-lg focus:scale-[1.02]"
                   />
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-indigo-500/0 to-purple-500/0 group-focus-within:from-blue-500/10 group-focus-within:via-indigo-500/10 group-focus-within:to-purple-500/10 transition-all duration-500 pointer-events-none"></div>
                 </div>
               </div>
-
-              <div>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="submit"
-                  onClick={handleSubmit}
-                  className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
-                >
-                  Sign in
-                </motion.button>
-              </div>
             </div>
 
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{' '}
-              <a href="#" className="font-semibold text-blue-600 hover:text-blue-500">
-                Create New Account
-              </a>
-            </p>
-          </div>
+            <div className="pt-2">
+              <motion.button
+                whileHover={{ 
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px -12px rgba(59, 130, 246, 0.4)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                className="flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-4 py-4 text-sm font-bold text-white shadow-lg hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-300 relative overflow-hidden"
+              >
+                <motion.div
+                  animate={{ 
+                    background: [
+                      "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                      "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)"
+                    ],
+                    x: [-100, 300]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="absolute inset-0"
+                />
+                <span className="relative z-10">Sign in to your account</span>
+              </motion.button>
+            </div>
+          </motion.form>
+
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.6 }}
+            className="mt-8 text-center text-sm text-gray-600"
+          >
+            New to Medical Spanish?{' '}
+            <motion.button 
+              whileHover={{ scale: 1.05, color: "#4F46E5" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleCreateAccount}
+              className="font-bold text-blue-600 hover:text-indigo-600 transition-colors duration-300 cursor-pointer relative"
+            >
+              Create your account
+              <motion.div
+                whileHover={{ scaleX: 1 }}
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 origin-left scale-x-0 transition-transform duration-300"
+              />
+            </motion.button>
+          </motion.p>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Right Side - Large Image */}
-      <div className="hidden md:flex w-3/5 relative bg-gradient-to-br from-slate-800 via-gray-900 to-indigo-900">
-        {/* Replace this div with your actual image */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-white text-center">
-            <div className="w-64 h-64 mx-auto mb-8 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
-              <span className="text-6xl">🏥</span>
-            </div>
-            <h3 className="text-3xl font-bold mb-4">Welcome to Medical Spanish</h3>
-            <p className="text-xl opacity-90">Learn medical terminology with confidence</p>
-          </div>
+      {/* Right Side - Modern Medical Theme */}
+      <div className="hidden md:flex w-3/5 relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 overflow-hidden">
+        {/* Animated mesh gradient background */}
+        <div className="absolute inset-0">
+          <motion.div 
+            animate={{
+              background: [
+                "radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.2) 0%, transparent 50%)",
+                "radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 60% 60%, rgba(16, 185, 129, 0.2) 0%, transparent 50%)",
+                "radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 60% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%), radial-gradient(circle at 20% 60%, rgba(16, 185, 129, 0.2) 0%, transparent 50%)"
+              ]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0"
+          />
+          
+          {/* Floating elements */}
+          <motion.div 
+            animate={{ 
+              y: [0, -20, 0],
+              rotate: [0, 5, 0]
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-3xl blur-xl"
+          />
+          <motion.div 
+            animate={{ 
+              y: [0, 15, 0],
+              rotate: [0, -3, 0]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-32 right-32 w-48 h-48 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full blur-2xl"
+          />
+          <motion.div 
+            animate={{ 
+              y: [0, -10, 0],
+              x: [0, 10, 0]
+            }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute top-1/2 left-1/4 w-24 h-24 bg-gradient-to-r from-green-400/20 to-teal-400/20 rounded-2xl blur-lg"
+          />
         </div>
         
-        {/* Uncomment and modify this section to use your actual image */}
-        {/*
-        <img 
-          src="your-image-path-here.jpg" 
-          alt="Medical Spanish App" 
-          className="w-full h-full object-cover"
-        />
-        */}
+        <div className="relative z-10 flex items-center justify-center text-white p-12 w-full h-full">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+            className="text-center max-w-lg"
+          >
+            <motion.div 
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.8, duration: 1.2, type: "spring", stiffness: 100 }}
+              className="w-32 h-32 mx-auto mb-8 relative"
+            >
+              <motion.div 
+                animate={{ 
+                  rotate: 360,
+                }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30 rounded-full"
+              />
+              <div className="absolute inset-2 bg-gradient-to-br from-slate-800/80 to-blue-900/80 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20">
+                <motion.span 
+                  animate={{
+                    textShadow: [
+                      "0 0 20px rgba(59, 130, 246, 0.5)",
+                      "0 0 40px rgba(139, 92, 246, 0.7)",
+                      "0 0 20px rgba(59, 130, 246, 0.5)"
+                    ]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="text-5xl"
+                >
+                  🩺
+                </motion.span>
+              </div>
+            </motion.div>
+
+            <motion.h3 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
+              className="text-4xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-indigo-200 bg-clip-text text-transparent"
+            >
+              Transform Patient Care
+            </motion.h3>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4, duration: 0.8 }}
+              className="text-xl opacity-90 mb-8 leading-relaxed"
+            >
+              Master medical Spanish through AI-powered conversations with patients from diverse Spanish-speaking regions
+            </motion.p>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.6, duration: 0.8 }}
+              className="flex flex-wrap justify-center gap-6 text-sm"
+            >
+              {[
+                { icon: "🌎", text: "6+ Dialects", color: "from-green-400 to-emerald-400" },
+                { icon: "🏥", text: "Real Scenarios", color: "from-blue-400 to-cyan-400" },
+                { icon: "🧠", text: "AI-Powered", color: "from-purple-400 to-violet-400" },
+                { icon: "📊", text: "Progress Tracking", color: "from-pink-400 to-rose-400" }
+              ].map((feature, index) => (
+                <motion.div
+                  key={feature.text}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.8 + index * 0.1, duration: 0.5 }}
+                  whileHover={{ 
+                    scale: 1.1,
+                    boxShadow: "0 10px 30px -10px rgba(255,255,255,0.3)"
+                  }}
+                  className="flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 hover:bg-white/20 transition-all duration-300"
+                >
+                  <span className="mr-2 text-lg">{feature.icon}</span>
+                  <span className={`font-semibold bg-gradient-to-r ${feature.color} bg-clip-text text-transparent`}>
+                    {feature.text}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
